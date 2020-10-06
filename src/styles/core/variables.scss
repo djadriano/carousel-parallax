@@ -1,0 +1,56 @@
+// Sass / variables
+// ----------------------------------------------------------
+
+$namespace: 'mmks';
+$base-space: 0.8;
+$base-font-size: 62.5%;
+
+// Sass / maps
+// ----------------------------------------------------------
+
+$font-size: (
+  'smallest': (12, 14),
+  'small': (18, 24),
+  'medium': (24, 40),
+  'huge': (36, 72),
+  'logo': (30, 40)
+);
+
+$colors: (
+  'white': #FFF,
+  'black': #000
+);
+
+$spaces: (
+  'xxs',
+  'xs',
+  's',
+  'm',
+  'l',
+  'xl',
+  'xxl'
+);
+
+// Static Custom Properties
+// ----------------------------------------------------------
+
+:root {
+  --base-font-size: #{$base-font-size};
+  --base-space: 0.8;
+  --font-default: 'KlavikaRegular', sans-serif;
+
+  @each $name, $value in $colors {
+    --color-#{$name}: #{$value};
+  }
+
+  @for $i from 1 through length($spaces) {
+    --spaces-#{nth($spaces, $i)}: calc(var(--base-space) * #{$i}rem);
+  }
+
+  font-family: var(--font-default);
+  line-height: 1.4;
+
+  @media screen and (min-width: 768px) {
+    --base-space: 1.2;
+  }
+}

@@ -1,0 +1,80 @@
+.#{$namespace}-main {
+  background: var(--color-black);
+  color: var(--color-white);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: var(--spaces-xs);
+
+  &__logo {
+    order: 1;
+    z-index: 20;
+
+    @media screen and (min-width: 768px) {
+      order: 3;
+    }
+
+    .screen-reader-text {
+      position: absolute!important;
+      clip: rect(1px,1px,1px,1px);
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .svg-logo-mm {
+      fill: var(--color-white);
+      width: 4rem;
+      transform: translate(0, -1rem);
+
+      @media screen and (min-width: 768px) {
+        width: 8rem;
+        transform: translate(0, 2rem);
+      }
+    }
+  }
+
+  &__title {
+    order: 3;
+    text-transform: uppercase;
+    font-size: 2rem;
+    line-height: 1;
+    border-bottom: 1px solid var(--color-white);
+
+    @media screen and (min-width: 768px) {
+      order: 1;
+      font-size: 4rem;
+    }
+  }
+
+  &__content {
+    order: 2;
+    text-align: right;
+    color: var(--color-white);
+
+    a {
+      color: var(--color-white);
+    }
+
+    p {
+      margin-top: 0;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__nav {
+    a {
+      margin-left: var(--spaces-xxs);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
