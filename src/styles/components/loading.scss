@@ -10,7 +10,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 21;
+  z-index: var(--z-index-loading);
   animation: fade-out 650ms 3800ms linear forwards;
 
   &__figure {
@@ -26,7 +26,7 @@
   &__label {
     background: var(--color-black);
     color: var(--color-white);
-    margin-top: 4rem;
+    margin-top: var(--spaces-l);
     position: relative;
     width: 100%;
     display: flex;

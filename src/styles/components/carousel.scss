@@ -1,11 +1,13 @@
 .#{$namespace}-carousel {
+  --text-shadow: 1px 1px var(--color-black);
+
   $self: &;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: var(--z-index-carousel);
 
   &__background {
     --bgPosition: 0;
@@ -29,7 +31,6 @@
       height: 100%;
 
       @media (orientation: landscape) {
-        height: 100vh;
         object-fit: cover;
       }
     }
@@ -68,38 +69,28 @@
     opacity: 0;
     transition: all 400ms ease-in-out;
 
-    &:nth-last-child(2) {
-      transition-delay: 200ms;
-    }
-
     &:first-child {
       align-items: flex-start;
     }
 
     &[data-text-to-right] {
       justify-content: flex-end;
-
-      h2 {
-        margin-right: var(--spaces-xs);
-        text-align: right;
-
-        @media screen and (min-width: 1200px) {
-          margin-right: 7.2rem;
-        }
-      }
     }
   }
 
   &__title {
-    max-width: clamp(14rem, 32vw, 32rem);
+    --margin-x-desktop: 7.2rem;
+    --max-width: clamp(14rem, 32vw, 32rem);
+
+    max-width: var(--max-width);
     text-transform: uppercase;
     line-height: 1.2;
     text-decoration: underline;
     margin-left: var(--spaces-xs);
-    text-shadow: 1px 1px var(--color-black);
+    text-shadow: var(--text-shadow);
 
-    @media screen and (min-width: 1200px) {
-      margin-left: 7.2rem;
+    @media screen and (min-width: $mq-desktop) {
+      margin-left: var(--margin-x-desktop);
     }
 
     [data-mmks-carousel-slide]:first-child & {
@@ -107,7 +98,7 @@
       margin-top: var(--spaces-xs);
 
       @media (orientation: portrait) {
-        max-width: 14rem;
+        --max-width: 14rem;
       }
     }
 
@@ -115,8 +106,8 @@
       margin-right: var(--spaces-xs);
       text-align: right;
 
-      @media screen and (min-width: 1200px) {
-        margin-right: 7.2rem;
+      @media screen and (min-width: $mq-desktop) {
+        margin-right: var(--margin-x-desktop);
       }
     }
   }
@@ -127,9 +118,9 @@
     left: 0;
     width: clamp(100%, 40vw, 100%);
     padding: 0 var(--spaces-xs);
-    text-shadow: 1px 1px var(--color-black);
+    text-shadow: var(--text-shadow);
 
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: $mq-laptop) {
       bottom: var(--spaces-l);
     }
   }
@@ -147,7 +138,7 @@
       pointer-events: none;
     }
 
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: $mq-desktop) {
       display: block;
     }
 
@@ -158,10 +149,12 @@
   }
 
   [data-mmks-carousel-prev] {
+    --hover-x: calc(var(--spaces-xxs) / 2);
+
     left: var(--spaces-xxs);
 
     &:hover {
-      left: calc(var(--spaces-xxs) / 2);
+      left: var(--hover-x);
     }
 
     svg {
@@ -173,7 +166,7 @@
     right: var(--spaces-xxs);
 
     &:hover {
-      right: calc(var(--spaces-xxs) / 2);
+      right: var(--hover-x);
     }
   }
 
@@ -195,7 +188,7 @@
     margin: var(--spaces-xxs) 0 0;
     opacity: 0;
     transition: opacity 250ms ease-out;
-    text-shadow: 1px 1px var(--color-black);
+    text-shadow: var(--text-shadow);
 
     @media (orientation: landscape) {
       margin: 0 0 0 var(--spaces-xxs);

@@ -2,15 +2,17 @@
 // ----------------------------------------------------------
 
 $namespace: 'mmks';
-$base-space: 0.8;
 $base-font-size: 62.5%;
+$mq-tablet: 768px;
+$mq-laptop: 1024px;
+$mq-desktop: 1200px;
 
 // Sass / maps
 // ----------------------------------------------------------
 
 $font-size: (
   'smallest': (10, 10),
-  'small': (12, 14),
+  'small': (12, 13),
   'medium': (22, 40)
 );
 
@@ -36,6 +38,9 @@ $spaces: (
   --base-font-size: #{$base-font-size};
   --base-space: 0.8;
   --font-default: 'KlavikaRegular', sans-serif;
+  --z-index-carousel: 10;
+  --z-index-loading: 21;
+  --z-index-main: 20;
 
   @each $name, $value in $colors {
     --color-#{$name}: #{$value};

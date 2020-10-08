@@ -2,13 +2,15 @@
   $self: &;
   display: none;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: $mq-laptop) {
     display: block;
   }
 
   &__links {
+    --border: 2px dotted var(--color-white);
+
     display: flex;
-    border: 2px dotted var(--color-white);
+    border: var(--border);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -16,7 +18,7 @@
     li {
       &:not(:last-child) {
         [data-mmks-carousel-nav-item] {
-          border-right: 2px dotted var(--color-white);
+          border-right: var(--border);
         }
       }
 
@@ -50,17 +52,10 @@
       pointer-events: none;
     }
 
-    &[data-is-active] {
+    &[data-is-active],
+    &:hover {
       &:after {
         transform: scale(1);
-      }
-    }
-
-    @media screen and (min-width: 768px) {
-      &:hover {
-        &:after {
-          transform: scale(1);
-        }
       }
     }
   }
