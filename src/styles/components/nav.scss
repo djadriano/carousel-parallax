@@ -1,6 +1,10 @@
 .#{$namespace}-carousel-nav {
   $self: &;
-  --activeItem: 1;
+  display: none;
+
+  @media screen and (min-width: 1024px) {
+    display: block;
+  }
 
   &__links {
     display: flex;
