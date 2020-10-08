@@ -1,19 +1,50 @@
 @font-face {
   font-family: 'KlavikaBold';
-  src:  url('/dist/assets/fonts/klavika-bold-webfont.woff') format('woff')
+  src:  url('/dist/assets/fonts/klavika-bold-webfont.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'KlavikaLight';
-  src:  url('/dist/assets/fonts/klavika-light-webfont.woff') format('woff')
+  src:  url('/dist/assets/fonts/klavika-light-webfont.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'KlavikaMedium';
-  src:  url('/dist/assets/fonts/klavika-medium-webfont.woff') format('woff')
+  src:  url('/dist/assets/fonts/klavika-medium-webfont.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'KlavikaRegular';
-  src:  url('/dist/assets/fonts/klavika-regular-webfont.woff') format('woff')
+  src:  url('/dist/assets/fonts/klavika-regular-webfont.woff') format('woff');
+  font-display: swap;
+}
+
+.fs {
+  --min-viewport: 320;
+  --max-viewport: 1366;
+  --viewport-difference: calc(100vw - (var(--min-viewport) * 0.1rem));
+  --font-size-difference: calc(var(--max-font-size) - var(--min-font-size));
+  --font-range-difference: calc(var(--max-viewport) - var(--min-viewport));
+  --letter-spacing: -0.06rem;
+
+  --font-scale: calc(
+    (var(--min-font-size) * 0.1rem) + var(--font-size-difference) *
+      var(--viewport-difference) / var(--font-range-difference)
+  );
+
+  font-size: var(--font-scale);
+  letter-spacing: var(--letter-spacing);
+}
+
+// Generate the font class dynamically
+// ----------------------------------------------------------
+
+@each $name, $value in $font-size {
+  .fs--#{$name} {
+    --min-font-size: #{nth($value, 1)};
+    --max-font-size: #{nth($value, 2)};
+  }
 }

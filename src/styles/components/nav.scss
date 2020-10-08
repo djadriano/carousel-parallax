@@ -9,16 +9,24 @@
     padding: 0;
     list-style: none;
 
-    li:not(:last-child) {
-      [data-mmks-carousel-nav-item] {
-        border-right: 2px dotted var(--color-white);
+    li {
+      &:not(:last-child) {
+        [data-mmks-carousel-nav-item] {
+          border-right: 2px dotted var(--color-white);
+        }
+      }
+
+      &:first-child,
+      &:last-child {
+        [data-mmks-carousel-nav-item] {
+          color: transparent;
+        }
       }
     }
   }
 
   [data-mmks-carousel-nav-item] {
     padding: 2px;
-    font-size: 1rem;
     color:  var(--color-white);
     min-width: 1.6rem;
     text-align: center;
