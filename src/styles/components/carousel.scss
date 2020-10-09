@@ -1,5 +1,6 @@
 .#{$namespace}-carousel {
   --text-shadow: 1px 1px var(--color-black);
+  --arrows-hover-space: calc(var(--spaces-xxs) / 2);
 
   $self: &;
   position: fixed;
@@ -119,6 +120,7 @@
     width: clamp(100%, 40vw, 100%);
     padding: 0 var(--spaces-xs);
     text-shadow: var(--text-shadow);
+    margin: 0;
 
     @media screen and (min-width: $mq-laptop) {
       bottom: var(--spaces-l);
@@ -149,12 +151,10 @@
   }
 
   [data-mmks-carousel-prev] {
-    --hover-x: calc(var(--spaces-xxs) / 2);
-
     left: var(--spaces-xxs);
 
     &:hover {
-      left: var(--hover-x);
+      left: var(--arrows-hover-space);
     }
 
     svg {
@@ -166,7 +166,7 @@
     right: var(--spaces-xxs);
 
     &:hover {
-      right: var(--hover-x);
+      right: var(--arrows-hover-space);
     }
   }
 

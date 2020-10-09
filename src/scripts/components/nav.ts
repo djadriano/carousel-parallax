@@ -4,14 +4,13 @@ class Nav {
   }
 
   private observeCarousel() {
-    const carouselEl = document.querySelector('[data-mmks-carousel]');
+    const carouselEl: HTMLElement = document.querySelector('[data-mmks-carousel]');
 
-    // @ts-ignore
-    const observer = new MutationObserver(mutations => {
+    const observer: MutationObserver = new MutationObserver(mutations => {
       mutations.forEach(item => {
-        const mutatedEl = item.target;
-        // @ts-ignore
-        this.setActiveItem(mutatedEl.getAttribute('data-current-slide'));
+        const mutatedEl = item.target as HTMLElement;
+
+        this.setActiveItem(+mutatedEl.getAttribute('data-current-slide'));
       });
     });
 
@@ -21,14 +20,12 @@ class Nav {
     });
   }
 
-  private setActiveItem(slideId: any) {
-    const activeItem = document.querySelector('[data-mmks-carousel-nav-item][data-is-active]');
-    // @ts-ignore
-    const selectedItem = [...document.querySelectorAll('[data-mmks-carousel-nav-item]')];
+  private setActiveItem(slideId: number) {
+    const activeItem: HTMLElement = document.querySelector('[data-mmks-carousel-nav-item][data-is-active]');
+    const selectedItem: NodeListOf<Element> = document.querySelectorAll('[data-mmks-carousel-nav-item]');
 
     activeItem.removeAttribute('data-is-active');
 
-    // @ts-ignore
     if (selectedItem.length) selectedItem[slideId - 1].setAttribute('data-is-active', '');
   }
 

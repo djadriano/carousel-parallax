@@ -1,5 +1,6 @@
 class Carousel {
 
+  carouselEl: HTMLElement;
   currentSlide: number;
   totalSlides: number;
   slides: NodeListOf<HTMLElement> | null;
@@ -17,31 +18,26 @@ class Carousel {
   }
 
   private moveBg() {
-    // @ts-ignore
-    const bgEl = <HTMLElement>document.querySelector('.mmks-carousel__background');
+    const bgEl: HTMLElement = document.querySelector('.mmks-carousel__background');
+    const bgImg: HTMLElement = bgEl.querySelector('img');
     const getBgPositions = window.matchMedia("(orientation: portrait)").matches ? this.bgPositionsPortrait : this.bgPositionsLandscape;
+    const currentSlideId = this.currentSlide - 1;
+    const percentOfImage = getBgPositions[currentSlideId] * bgImg.getBoundingClientRect().width / 100;
+    const percentOfScreen = getBgPositions[currentSlideId] * window.innerWidth / 100;
 
-    const foo = getBgPositions[this.currentSlide - 1] * bgEl.querySelector('img').getBoundingClientRect().width / 100;
-    const bar = getBgPositions[this.currentSlide - 1] * window.innerWidth / 100;
-
-    bgEl.style.setProperty('--bgPosition', `${bar - foo}px`);
+    bgEl.style.setProperty('--bgPosition', `${percentOfScreen - percentOfImage}px`);
   }
 
   private observeCarousel() {
-    const carouselEl = document.querySelector('[data-mmks-carousel]');
-
-    // @ts-ignore
-    const observer = new MutationObserver(mutations => {
+    const observer: MutationObserver = new MutationObserver(mutations => {
       mutations.forEach(item => {
-        // @ts-ignore
-        this.currentSlide = Number(item.target.getAttribute('data-current-slide'));
+        const mutatedEl = item.target as HTMLElement;
+        this.currentSlide = Number(mutatedEl.getAttribute('data-current-slide'));
 
         if (this.currentSlide > 1 && this.currentSlide < this.slides.length) {
-          // @ts-ignore
-          item.target.setAttribute('data-in-slides', '');
+          mutatedEl.setAttribute('data-in-slides', '');
         } else {
-          // @ts-ignore
-          item.target.removeAttribute('data-in-slides');
+          mutatedEl.removeAttribute('data-in-slides');
         }
 
         this.moveBg();
@@ -51,17 +47,15 @@ class Carousel {
       });
     });
 
-    observer.observe(carouselEl, {
+    observer.observe(this.carouselEl, {
       attributes: true,
       attributeFilter: ['data-current-slide']
     });
   }
 
-  private onSlideVisible(entries: any, self: any) {
-    const carouselEl = document.querySelector('[data-mmks-carousel]');
-
+  private onSlideVisible(entries: any) {
     entries.forEach((entry: any) => {
-      const entryEl = entry.target;
+      const entryEl: HTMLElement = entry.target;
 
       if(entry.intersectionRatio > 0.3) {
         entry.target.style.opacity = 0;
@@ -70,7 +64,7 @@ class Carousel {
 
       if (entry.intersectionRatio > 0.5) {
         this.currentSlide = Number(entryEl.getAttribute('id'));
-        carouselEl.setAttribute('data-current-slide', entryEl.getAttribute('id'));
+        this.carouselEl.setAttribute('data-current-slide', entryEl.getAttribute('id'));
       }
 
       if(entry.intersectionRatio === 1) {
@@ -81,8 +75,8 @@ class Carousel {
   }
 
   private observeSlide(slide: HTMLElement) {
-    const observer = <IntersectionObserver>new IntersectionObserver(this.onSlideVisible.bind(this), <IntersectionObserverInit>{
-      root: document.querySelector('[data-mmks-carousel]'),
+    const observer: IntersectionObserver = new IntersectionObserver(this.onSlideVisible.bind(this), <IntersectionObserverInit> {
+      root: this.carouselEl,
       rootMargin: '0px',
       threshold: [0.3, 0.5, 1]
     });
@@ -91,10 +85,9 @@ class Carousel {
   }
 
   private toggleActiveArrowButtonsLinks() {
-    const prevButtonEl = document.querySelector('[data-mmks-carousel-prev]');
-    const nextButtonEl = document.querySelector('[data-mmks-carousel-next]');
+    const prevButtonEl: HTMLElement = document.querySelector('[data-mmks-carousel-prev]');
+    const nextButtonEl: HTMLElement = document.querySelector('[data-mmks-carousel-next]');
 
-    // @ts-ignore
     if (this.currentSlide === 1) {
       prevButtonEl.setAttribute('data-is-disabled', '');
     } else {
@@ -109,34 +102,29 @@ class Carousel {
   }
 
   private setArrowButtonsLinks() {
-    const prevButtonEl = document.querySelector('[data-mmks-carousel-prev]');
-    const nextButtonEl = document.querySelector('[data-mmks-carousel-next]');
+    const prevButtonEl: HTMLElement = document.querySelector('[data-mmks-carousel-prev]');
+    const nextButtonEl: HTMLElement = document.querySelector('[data-mmks-carousel-next]');
 
-    // @ts-ignore
     prevButtonEl.setAttribute('href', `#${this.currentSlide - 1}`);
-    // @ts-ignore
     nextButtonEl.setAttribute('href', `#${this.currentSlide + 1}`);
   }
 
   private setStepsIndicator() {
-    const currentIndicatorEl = document.querySelector('[data-current-step]');
-    const totalIndicatorEl = document.querySelector('[data-total-steps]');
+    const currentIndicatorEl: HTMLElement = document.querySelector('[data-current-step]');
+    const totalIndicatorEl: HTMLElement = document.querySelector('[data-total-steps]');
 
     if (this.currentSlide > 1 && this.currentSlide < this.slides.length) {
-      // @ts-ignore
-      currentIndicatorEl.textContent = this.currentSlide - 1;
+      currentIndicatorEl.textContent = String(this.currentSlide - 1);
     }
-    // @ts-ignore
-    totalIndicatorEl.textContent = (this.slides.length - 2);
+
+    totalIndicatorEl.textContent = String(this.slides.length - 2);
   }
 
   private initialize() {
-    // @ts-ignore
-    const arrCarouselEl = document.querySelector('[data-mmks-carousel]');
-    // @ts-ignore
-    this.slides = [...arrCarouselEl.querySelectorAll('[data-mmks-carousel-slide]')];
+    this.carouselEl = document.querySelector('[data-mmks-carousel]');
+    this.slides = this.carouselEl.querySelectorAll('[data-mmks-carousel-slide]');
 
-    this.slides.forEach((slide: HTMLElement) => {
+    this.slides.forEach((slide) => {
       this.observeSlide(slide);
     });
 
