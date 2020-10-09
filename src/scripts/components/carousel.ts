@@ -1,6 +1,8 @@
 class Carousel {
 
   carouselEl: HTMLElement;
+  prevButtonEl: HTMLElement;
+  nextButtonEl: HTMLElement;
   currentSlide: number;
   totalSlides: number;
   slides: NodeListOf<HTMLElement> | null;
@@ -85,28 +87,22 @@ class Carousel {
   }
 
   private toggleActiveArrowButtonsLinks() {
-    const prevButtonEl: HTMLElement = document.querySelector('[data-mmks-carousel-prev]');
-    const nextButtonEl: HTMLElement = document.querySelector('[data-mmks-carousel-next]');
-
     if (this.currentSlide === 1) {
-      prevButtonEl.setAttribute('data-is-disabled', '');
+      this.prevButtonEl.setAttribute('data-is-disabled', '');
     } else {
-      if(prevButtonEl.hasAttribute('data-is-disabled')) prevButtonEl.removeAttribute('data-is-disabled');
+      if(this.prevButtonEl.hasAttribute('data-is-disabled')) this.prevButtonEl.removeAttribute('data-is-disabled');
     }
 
     if (this.currentSlide === (this.slides.length)) {
-      nextButtonEl.setAttribute('data-is-disabled', '');
+      this.nextButtonEl.setAttribute('data-is-disabled', '');
     } else {
-      if(nextButtonEl.hasAttribute('data-is-disabled')) nextButtonEl.removeAttribute('data-is-disabled');
+      if(this.nextButtonEl.hasAttribute('data-is-disabled')) this.nextButtonEl.removeAttribute('data-is-disabled');
     }
   }
 
   private setArrowButtonsLinks() {
-    const prevButtonEl: HTMLElement = document.querySelector('[data-mmks-carousel-prev]');
-    const nextButtonEl: HTMLElement = document.querySelector('[data-mmks-carousel-next]');
-
-    prevButtonEl.setAttribute('href', `#${this.currentSlide - 1}`);
-    nextButtonEl.setAttribute('href', `#${this.currentSlide + 1}`);
+    this.prevButtonEl.setAttribute('href', `#${this.currentSlide - 1}`);
+    this.nextButtonEl.setAttribute('href', `#${this.currentSlide + 1}`);
   }
 
   private setStepsIndicator() {
@@ -122,6 +118,8 @@ class Carousel {
 
   private initialize() {
     this.carouselEl = document.querySelector('[data-mmks-carousel]');
+    this.prevButtonEl = document.querySelector('[data-mmks-carousel-prev]');
+    this.nextButtonEl = document.querySelector('[data-mmks-carousel-next]');
     this.slides = this.carouselEl.querySelectorAll('[data-mmks-carousel-slide]');
 
     this.slides.forEach((slide) => {
