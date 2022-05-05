@@ -8,6 +8,9 @@
 - CSS Scroll Snap (used in Carousel)
 - Mutation and Intersection Observer to manage the Carousel Slides
 
+## Demo
+https://prismatic-lamington-318a22.netlify.app/
+
 ## How to use
 
 The build files are inside of: `dist` folder. It's not necessary run a server to see the project, just double click directly into `index.html`
